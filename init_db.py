@@ -1,52 +1,53 @@
 import sqlite3
-from werkzeug.security import generate_password_hash
+import os
 
-DATABASE = "/tmp/happylivein.db"
+DATABASE = 'happylivein.db'
 
-# Connect to the database
-conn = sqlite3.connect(DATABASE)
-cursor = conn.cursor()
+def init_db():
+    # Ensure old DB is removed (optional)
+    if os.path.exists(DATABASE):
+        os.remove(DATABASE)
 
-# Drop existing tables (optional, for clean re-init)
-cursor.execute('DROP TABLE IF EXISTS users')
-cursor.execute('DROP TABLE IF EXISTS customers')
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
 
-# Create users table
-cursor.execute('''
-    CREATE TABLE users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT NOT NULL UNIQUE,
-        password TEXT NOT NULL
-    )
-''')
+    # Create users table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL
+        )
+    ''')
 
-# Insert default admin user
-admin_username = 'admin'
-admin_password = generate_password_hash('admin')
-cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (admin_username, admin_password))
+    # Create customers table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS customers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            date TEXT,
+            client_name TEXT,
+            location TEXT,
+            mode TEXT,
+            notes TEXT,
+            next_followup TEXT,
+            meeting_notes TEXT,
+            address TEXT,
+            property_size TEXT,
+            requirement TEXT,
+            possession TEXT,
+            budget TEXT,
+            quotation TEXT
+        )
+    ''')
 
-# Create customers table
-cursor.execute('''
-    CREATE TABLE customers (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        date TEXT,
-        client_name TEXT,
-        location TEXT,
-        mode TEXT,
-        notes TEXT,
-        next_followup TEXT,
-        meeting_notes TEXT,
-        address TEXT,
-        property_size TEXT,
-        requirement TEXT,
-        possession TEXT,
-        budget TEXT,
-        quotation TEXT
-    )
-''')
+    # Insert default admin user
+    cursor.execute('''
+        INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)
+    ''', ('admin', 'admin'))
 
-# Commit changes and close connection
-conn.commit()
-conn.close()
+    conn.commit()
+    conn.close()
+    print("Database initialized successfully.")
 
-print("Database initialized successfully with default admin.")
+if __name__ == '__main__':
+    init_db()
