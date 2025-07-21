@@ -54,6 +54,15 @@ def dashboard():
     conn.close()
     return render_template('dashboard.html', customers=customers)
 
+@app.route('/delete/<int:id>')
+def delete_customer_route(id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM customers WHERE id = ?', (id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('dashboard'))
+
+
 @app.route('/add_customer', methods=['GET', 'POST'])
 def add_customer_route():
     if 'username' not in session:
@@ -110,3 +119,4 @@ def edit_customer(id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+    app.config['DEBUG'] = True
