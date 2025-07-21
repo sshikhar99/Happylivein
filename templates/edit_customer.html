@@ -1,78 +1,41 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
+
 {% block content %}
-<div class="card shadow-lg p-4">
-    <h2 class="mb-4 text-primary text-center">Edit Lead</h2>
-    <form method="POST" action="{{ url_for('edit_customer', id=customer[0]) }}">
-        <div class="row mb-3">
-            <div class="col">
-                <label>DATE</label>
-                <input type="date" name="date" class="form-control" value="{{ customer[1] }}" required>
+<div class="container mt-5">
+    <h2 class="mb-4">Edit Customer</h2>
+    <form method="post">
+        <div class="row g-3">
+            {% for field, label in {
+                'date': 'Date',
+                'client_name': 'Client Name',
+                'location': 'Location',
+                'mode': 'Mode',
+                'notes': 'Notes',
+                'next_followup': 'Next Follow-Up',
+                'meeting_notes': 'Meeting Notes',
+                'address': 'Address',
+                'property_size': 'Property Size',
+                'requirement': 'Requirement',
+                'possession': 'Possession',
+                'budget': 'Budget'
+            }.items() %}
+            <div class="col-md-4">
+                <label class="form-label">{{ label }}</label>
+                <input type="text" class="form-control" name="{{ field }}" value="{{ customer[field] }}">
             </div>
-            <div class="col">
-                <label>CLIENT NAME</label>
-                <input type="text" name="client_name" class="form-control" value="{{ customer[2] }}" required>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col">
-                <label>LOCATION</label>
-                <input type="text" name="location" class="form-control" value="{{ customer[3] }}">
-            </div>
-            <div class="col">
-                <label>MODE</label>
-                <input type="text" name="mode" class="form-control" value="{{ customer[4] }}">
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col">
-                <label>NOTES</label>
-                <textarea name="notes" class="form-control">{{ customer[5] }}</textarea>
-            </div>
-            <div class="col">
-                <label>NEXT FOLLOWUP</label>
-                <input type="date" name="next_followup" class="form-control" value="{{ customer[6] }}">
-            </div>
-        </div>
-        <div class="mb-3">
-            <label>MEETING NOTES</label>
-            <textarea name="meeting_notes" class="form-control">{{ customer[7] }}</textarea>
-        </div>
-        <div class="row mb-3">
-            <div class="col">
-                <label>ADDRESS</label>
-                <input type="text" name="address" class="form-control" value="{{ customer[8] }}">
-            </div>
-            <div class="col">
-                <label>PROPERTY SIZE</label>
-                <input type="text" name="property_size" class="form-control" value="{{ customer[9] }}">
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col">
-                <label>REQUIREMENT</label>
-                <input type="text" name="requirement" class="form-control" value="{{ customer[10] }}">
-            </div>
-            <div class="col">
-                <label>POSSESSION</label>
-                <input type="text" name="possession" class="form-control" value="{{ customer[11] }}">
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col">
-                <label>BUDGET</label>
-                <input type="text" name="budget" class="form-control" value="{{ customer[12] }}">
-            </div>
-            <div class="col">
-                <label>QUOTATION</label>
-                <select name="quotation" class="form-control">
-                    <option value="Yes" {% if customer[13] == 'Yes' %}selected{% endif %}>Yes</option>
-                    <option value="No" {% if customer[13] == 'No' %}selected{% endif %}>No</option>
+            {% endfor %}
+
+            <div class="col-md-4">
+                <label class="form-label">Quotation</label>
+                <select class="form-select" name="quotation">
+                    <option value="Yes" {% if customer['quotation'] == 'Yes' %}selected{% endif %}>Yes</option>
+                    <option value="No" {% if customer['quotation'] == 'No' %}selected{% endif %}>No</option>
                 </select>
             </div>
         </div>
 
-        <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-success">Update</button>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Update</button>
             <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
         </div>
     </form>
