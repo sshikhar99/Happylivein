@@ -1,3 +1,8 @@
+import os
+if not os.path.exists(DATABASE):
+    from init_db import init_db
+    init_db()
+
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -5,7 +10,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-DATABASE = 'happylivein.db'
+DATABASE = "/tmp/happylivein.db"
+
 
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)

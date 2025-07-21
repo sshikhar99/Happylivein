@@ -1,7 +1,7 @@
 import sqlite3
 from werkzeug.security import generate_password_hash
 
-DATABASE = 'happylivein.db'
+DATABASE = "/tmp/happylivein.db"
 
 # Connect to the database
 conn = sqlite3.connect(DATABASE)
