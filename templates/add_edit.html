@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-lg p-4">
+        <h2 class="text-center text-primary mb-4">{{ 'Edit' if customer else 'Add' }} Customer Lead</h2>
+        <form method="POST">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Date</label>
+                    <input type="date" name="date" class="form-control" value="{{ customer[1] if customer else '' }}" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Client Name</label>
+                    <input type="text" name="client_name" class="form-control" value="{{ customer[2] if customer else '' }}" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Location</label>
+                    <input type="text" name="location" class="form-control" value="{{ customer[3] if customer else '' }}">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Mode</label>
+                    <input type="text" name="mode" class="form-control" value="{{ customer[4] if customer else '' }}">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Notes</label>
+                    <input type="text" name="notes" class="form-control" value="{{ customer[5] if customer else '' }}">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Next Followup</label>
+                    <input type="date" name="next_followup" class="form-control" value="{{ customer[6] if customer else '' }}">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Meeting Notes</label>
+                    <textarea name="meeting_notes" class="form-control">{{ customer[7] if customer else '' }}</textarea>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Address</label>
+                    <textarea name="address" class="form-control">{{ customer[8] if customer else '' }}</textarea>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Property Size</label>
+                    <input type="text" name="property_size" class="form-control" value="{{ customer[9] if customer else '' }}">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Requirement</label>
+                    <input type="text" name="requirement" class="form-control" value="{{ customer[10] if customer else '' }}">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Possession</label>
+                    <input type="text" name="possession" class="form-control" value="{{ customer[11] if customer else '' }}">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Budget</label>
+                    <input type="text" name="budget" class="form-control" value="{{ customer[12] if customer else '' }}">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Quotation</label>
+                    <select name="quotation" class="form-select">
+                        <option value="Yes" {% if customer and customer[13] == 'Yes' %}selected{% endif %}>Yes</option>
+                        <option value="No" {% if customer and customer[13] == 'No' %}selected{% endif %}>No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mt-4 text-center">
+                <button type="submit" class="btn btn-primary">{{ 'Update' if customer else 'Add' }} Lead</button>
+                <a href="{{ url_for('home') }}" class="btn btn-secondary ms-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="card shadow-lg p-4">
+    <h2 class="mb-4 text-center text-primary">Lead Dashboard</h2>
+    <div class="d-flex justify-content-between mb-3">
+        <a href="{{ url_for('add_customer') }}" class="btn btn-primary btn-sm">Add Lead</a>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger btn-sm">Logout</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped align-middle">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>DATE</th>
+                    <th>CLIENT NAME</th>
+                    <th>LOCATION</th>
+                    <th>MODE</th>
+                    <th>NOTES</th>
+                    <th>NEXT FOLLOWUP</th>
+                    <th>MEETING NOTES</th>
+                    <th>ADDRESS</th>
+                    <th>PROPERTY SIZE</th>
+                    <th>REQUIREMENT</th>
+                    <th>POSSESSION</th>
+                    <th>BUDGET</th>
+                    <th>QUOTATION</th>
+                    <th>ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer[1] }}</td>
+                    <td>{{ customer[2] }}</td>
+                    <td>{{ customer[3] }}</td>
+                    <td>{{ customer[4] }}</td>
+                    <td>{{ customer[5] }}</td>
+                    <td>{{ customer[6] }}</td>
+                    <td>{{ customer[7] }}</td>
+                    <td>{{ customer[8] }}</td>
+                    <td>{{ customer[9] }}</td>
+                    <td>{{ customer[10] }}</td>
+                    <td>{{ customer[11] }}</td>
+                    <td>{{ customer[12] }}</td>
+                    <td>{{ customer[13] }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_customer', id=customer[0]) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a href="{{ url_for('delete_customer', id=customer[0]) }}" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

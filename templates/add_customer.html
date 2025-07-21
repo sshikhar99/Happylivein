@@ -1,0 +1,81 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="card shadow-lg p-4">
+    <h2 class="mb-4 text-primary text-center">Add New Lead</h2>
+    <form method="POST" action="{{ url_for('add_customer') }}">
+        <div class="row mb-3">
+            <div class="col">
+                <label>DATE</label>
+                <input type="date" name="date" class="form-control" required>
+            </div>
+            <div class="col">
+                <label>CLIENT NAME</label>
+                <input type="text" name="client_name" class="form-control" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label>LOCATION</label>
+                <input type="text" name="location" class="form-control">
+            </div>
+            <div class="col">
+                <label>MODE</label>
+                <input type="text" name="mode" class="form-control">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label>NOTES</label>
+                <textarea name="notes" class="form-control"></textarea>
+            </div>
+            <div class="col">
+                <label>NEXT FOLLOWUP</label>
+                <input type="date" name="next_followup" class="form-control">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label>MEETING NOTES</label>
+            <textarea name="meeting_notes" class="form-control"></textarea>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label>ADDRESS</label>
+                <input type="text" name="address" class="form-control">
+            </div>
+            <div class="col">
+                <label>PROPERTY SIZE</label>
+                <input type="text" name="property_size" class="form-control">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label>REQUIREMENT</label>
+                <input type="text" name="requirement" class="form-control">
+            </div>
+            <div class="col">
+                <label>POSSESSION</label>
+                <input type="text" name="possession" class="form-control">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label>BUDGET</label>
+                <input type="text" name="budget" class="form-control">
+            </div>
+            <div class="col">
+                <label>QUOTATION</label>
+                <select name="quotation" class="form-control">
+                    <option value="">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success">Save</button>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
