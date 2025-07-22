@@ -5,9 +5,7 @@ import os
 app = Flask(__name__)
 app.secret_key = 'happylivein_secret'
 
-# Ensure database exists before launching
 DATABASE = os.path.join(os.path.dirname(__file__), 'happylivein.db')
-
 
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
@@ -58,7 +56,6 @@ def delete_customer_route(id):
     conn.commit()
     conn.close()
     return redirect(url_for('dashboard'))
-
 
 @app.route('/add_customer', methods=['GET', 'POST'])
 def add_customer_route():
@@ -116,4 +113,3 @@ def edit_customer(id):
 
 if __name__ == '__main__':
     app.run()
-
