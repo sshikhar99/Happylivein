@@ -5,12 +5,9 @@ import os
 app = Flask(__name__)
 app.secret_key = 'happylivein_secret'
 
+# Ensure database exists before launching
 DATABASE = os.path.join(os.path.dirname(__file__), 'happylivein.db')
 
-# Ensure database exists before launching
-if not os.path.exists(DATABASE):
-    import init_db
-    init_db.init_db()
 
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
@@ -118,5 +115,5 @@ def edit_customer(id):
     return render_template('edit_customer.html', customer=customer)
 
 if __name__ == '__main__':
-    app.run(debug=True)
-    app.config['DEBUG'] = True
+    app.run()
+
