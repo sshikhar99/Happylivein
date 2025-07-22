@@ -1,20 +1,23 @@
 import sqlite3
+import os
+
+DATABASE = os.path.join(os.path.dirname(__file__), 'happylivein.db')
 
 def init_db():
-    conn = sqlite3.connect('happylivein.db')
-    c = conn.cursor()
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
 
     # Create users table
-    c.execute('''
+    cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL,
+            username TEXT NOT NULL UNIQUE,
             password TEXT NOT NULL
         )
     ''')
 
     # Create customers table
-    c.execute('''
+    cursor.execute('''
         CREATE TABLE IF NOT EXISTS customers (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             date TEXT,
@@ -33,11 +36,13 @@ def init_db():
         )
     ''')
 
-    # Insert default user
-    c.execute('INSERT INTO users (username, password) VALUES (?, ?)', ('happylivein', 'shikhar'))
+    # Insert default user (your credentials)
+    cursor.execute('DELETE FROM users')  # Clean old users
+    cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', ('happylivein', 'shikhar'))
 
     conn.commit()
     conn.close()
+    print("Database initialized with default user.")
 
 if __name__ == '__main__':
     init_db()
